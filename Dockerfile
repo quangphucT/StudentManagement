@@ -9,3 +9,4 @@ COPY target/*.jar app.jar
 
 # Mặc định chạy ứng dụng Spring Boot khi container start
 ENTRYPOINT ["java", "-jar", "app.jar"]
+EXPOSE 8080
