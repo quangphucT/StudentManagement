@@ -4,6 +4,7 @@ import com.example.demo.entity.Account;
 import com.example.demo.exception.DuplicationException;
 import com.example.demo.model.RegisterRequest;
 import com.example.demo.repository.AccountRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,15 +20,17 @@ public class AuthenticationService implements UserDetailsService {
     AccountRepository accountRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    ModelMapper modelMapper;
     public Account register(RegisterRequest registerRequest) {
-        Account account =
+         Account acc = modelMapper.map(registerRequest, Account.class);
        try {
-           account.setCreatedAt(new Date());
-           account.setPassword(passwordEncoder.encode(account.getPassword()));
-           Account newAccount =  accountRepository.save(account);
+           acc.setCreatedAt(new Date());
+           acc.setPassword(passwordEncoder.encode(acc.getPassword()));
+           Account newAccount =  accountRepository.save(acc);
            return newAccount;
        }catch (Exception e) {
-           if(e.getMessage().contains(account.getEmail())) {
+           if(e.getMessage().contains(acc.getEmail())) {
              throw new DuplicationException("Email already in use");
            }else{
                throw new DuplicationException("Phone already in use");
