@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -14,6 +15,8 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 public class Student {
+    @Schema(defaultValue = "false")
+    Boolean isDeleted = false;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
