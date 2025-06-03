@@ -21,7 +21,7 @@ public class StudentApi {
         Student newStudent = studentService.createStudent(student);
         return ResponseEntity.ok(newStudent);
     }
-    @GetMapping()
+    @GetMapping
     public ResponseEntity getAllStudents() {
         List<Student> students = studentService.getAllStudents();
         return ResponseEntity.ok(students);
